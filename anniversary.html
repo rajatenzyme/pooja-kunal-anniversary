@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💕 Happy Anniversary Dholu!</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --pk:#ff69b4;--pkd:#ff1493;--pkl:#ffeef8;--pkm:#ffb6d9;
+  --td:#5a1a3a;--tm:#8b3565;--cream:#fff5fa;--gold:#ffd700
+}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#ff9a9e,#fecfef,#ffecd2);min-height:100vh;overflow-x:hidden}
+
+/* HEARTS BG */
+#heartsBg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.fheart{position:absolute;bottom:-60px;animation:floatUp linear infinite;user-select:none}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:.7}100%{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+
+/* SCREENS */
+.screen{display:none;position:relative;z-index:1;min-height:100vh;justify-content:center;align-items:center;flex-direction:column;padding:20px;text-align:center}
+.screen.active{display:flex}
+
+/* CARD */
+.card{background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-radius:32px;padding:45px 40px;max-width:650px;width:100%;box-shadow:0 25px 70px rgba(255,20,147,.3),0 0 0 2px rgba(255,182,193,.5)}
+
+/* TYPE */
+h1{font-family:'Dancing Script',cursive;font-size:2.8rem;color:var(--pkd);margin-bottom:14px;line-height:1.2}
+h2{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--td);margin-bottom:12px}
+p{color:var(--tm);font-size:.98rem;line-height:1.7;margin-bottom:8px}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:14px 36px;border-radius:50px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.98rem;font-weight:600;transition:all .3s}
+.btn-pink{background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;box-shadow:0 8px 25px rgba(255,20,147,.4)}
+.btn-pink:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(255,20,147,.5)}
+
+/* INPUTS */
+input[type=text],input[type=password]{width:100%;padding:15px 20px;border:2px solid var(--pkm);border-radius:15px;font-size:.98rem;font-family:'Poppins',sans-serif;background:var(--cream);color:var(--td);outline:none;transition:all .3s;margin-bottom:14px}
+input:focus{border-color:var(--pkd);box-shadow:0 0 0 3px rgba(255,20,147,.15)}
+@keyframes inputShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.shake{animation:inputShake .4s ease 3}
+
+/* LOCK SCREEN */
+#lockScreen{background:radial-gradient(ellipse at center,#ff9ecf,#ff69b4 60%,#c2185b)}
+#lockScreen .card{background:rgba(255,255,255,.93)}
+.lock-icon{font-size:5rem;margin-bottom:18px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.hint-box{background:rgba(255,182,193,.25);border:1px dashed var(--pk);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:.88rem;color:var(--tm)}
+.err{color:#e53935;font-size:.88rem;min-height:20px;margin-top:6px}
+
+/* DEBUG SCREEN */
+.code-block{background:#1e1e2e;border-radius:15px;padding:22px 26px;margin:18px 0;text-align:left;font-family:'Courier New',monospace;font-size:.9rem;line-height:1.9;border-left:4px solid var(--pk)}
+.ck{color:#ff79c6}.cs{color:#f1fa8c}.cc{color:#6272a4;font-style:italic}.cv{color:#8be9fd}.cbug{color:#ff5555;background:rgba(255,85,85,.15);padding:0 4px;border-radius:4px}.ct{color:#f8f8f2}
+.dbr{margin-top:14px;padding:14px 18px;border-radius:12px;font-size:.93rem}
+.db-ok{background:rgba(46,125,50,.1);border:2px solid #388e3c;color:#2e7d32}
+.db-err{background:rgba(229,57,53,.1);border:2px solid #e53935;color:#c62828}
+
+/* INTRO */
+#introScreen{background:linear-gradient(135deg,#ff9a9e,#fecfef)}
+.badge{display:inline-block;background:linear-gradient(135deg,#ffd700,#ffaa00);color:#fff;padding:7px 24px;border-radius:50px;font-size:.82rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;box-shadow:0 5px 15px rgba(255,170,0,.4)}
+.names{font-family:'Dancing Script',cursive;font-size:3.4rem;color:var(--pkd);margin:18px 0;line-height:1.1}
+.tl{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:24px 0}
+.tl-item{background:linear-gradient(135deg,#fff0f5,#ffe4ef);border:1px solid var(--pkm);border-radius:15px;padding:14px 18px;flex:1;min-width:130px;max-width:180px}
+.tl-icon{font-size:1.7rem;margin-bottom:4px}
+.tl-lbl{font-size:.7rem;color:var(--tm);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.tl-date{font-size:.95rem;color:var(--pkd);font-weight:700;margin-top:4px}
+
+/* QUIZ */
+#quizScreen{background:linear-gradient(135deg,#ffeef8,#ffe4f0,#ffd6e7)}
+.prog-bar{width:100%;height:10px;background:var(--pkm);border-radius:10px;overflow:hidden;margin-bottom:7px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--pk),var(--pkd));border-radius:10px;transition:width .5s ease}
+.prog-txt{font-size:.83rem;color:var(--tm);margin-bottom:20px}
+.q-emoji{font-size:3rem;margin-bottom:12px}
+.q-text{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--td);margin-bottom:22px;line-height:1.4}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.opt{padding:15px 12px;border:2px solid var(--pkm);border-radius:15px;background:var(--cream);color:var(--td);font-size:.92rem;font-family:'Poppins',sans-serif;cursor:pointer;transition:all .3s}
+.opt:hover{border-color:var(--pk);background:var(--pkl);transform:translateY(-2px)}
+.opt.correct{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-color:#4caf50;color:#2e7d32}
+.opt.wrong{background:linear-gradient(135deg,#ffebee,#ffcdd2);border-color:#f44336;color:#c62828}
+.score-badge{display:inline-block;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;padding:8px 22px;border-radius:50px;font-weight:600;margin:12px 0}
+.quiz-done{font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--pkd);margin:16px 0}
+
+/* FEEDBACK OVERLAYS */
+.fb-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:500;justify-content:center;align-items:center}
+.fb-overlay.show{display:flex}
+.fb-correct{background:rgba(255,182,193,.95)}
+.fb-wrong{background:rgba(255,240,245,.97)}
+.fb-content{text-align:center;padding:40px;animation:bounceIn .5s cubic-bezier(.68,-.55,.265,1.55)}
+@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
+.cry-face{font-size:7rem;display:block;animation:cry-shake .4s ease infinite alternate}
+@keyframes cry-shake{0%{transform:rotate(-6deg)}100%{transform:rotate(6deg)}}
+.yay-face{font-size:7rem;display:block;animation:spin-in .7s ease}
+@keyframes spin-in{0%{transform:scale(0) rotate(-180deg)}70%{transform:scale(1.2) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+.fb-msg{font-family:'Dancing Script',cursive;font-size:2rem;margin-top:14px}
+.fb-sub{font-size:.9rem;margin-top:8px;color:var(--tm)}
+.fb-correct .fb-msg{color:var(--pkd)}
+.fb-wrong .fb-msg{color:#c62828}
+
+/* CONFETTI */
+.cp{position:fixed;top:-10px;border-radius:2px;animation:cffall linear forwards;pointer-events:none;z-index:600}
+@keyframes cffall{0%{opacity:1;transform:translateY(0) rotate(0deg) translateX(0)}100%{opacity:0;transform:translateY(110vh) rotate(720deg) translateX(var(--tx))}}
+
+/* GALLERY */
+#galleryScreen{background:linear-gradient(135deg,#ffe4e1,#ffd1dc,#ffb6c1)}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:22px 0}
+.g-item{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(255,20,147,.3);cursor:pointer;transition:transform .3s;position:relative}
+.g-item:hover{transform:scale(1.03)}
+.g-item img{width:100%;height:220px;object-fit:cover;display:block}
+.g-item.wide{grid-column:span 2}
+.g-item.wide img{height:260px}
+.g-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(180,0,90,.85));color:#fff;padding:28px 14px 14px;font-size:.82rem;font-style:italic}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:700;justify-content:center;align-items:center}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90%;max-height:88vh;border-radius:15px;object-fit:contain}
+.lb-close{position:absolute;top:18px;right:22px;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;line-height:1}
+
+/* SHAYARI */
+#shayariScreen{background:linear-gradient(135deg,#ff9a9e,#fecfef,#ffd6e7)}
+#shayariScreen .card{background:rgba(255,255,255,.88);border:2px solid rgba(255,105,180,.4);max-width:700px}
+#shayariScreen h2{font-family:'Dancing Script',cursive;font-size:2.4rem;color:var(--pkd);margin-bottom:8px}
+.shayari-text{font-family:'Playfair Display',serif;font-style:italic;font-size:1.02rem;line-height:2.3;color:#5a1a3a;white-space:pre-line;text-align:left;padding:18px 22px;border-left:3px solid var(--pk);min-height:40px}
+.floral{font-size:1.8rem;margin:14px 0;letter-spacing:6px}
+
+/* FINALE */
+#finaleScreen{background:radial-gradient(ellipse at center,#ff69b4,#c2185b 60%,#880e4f)}
+#finaleScreen .card{background:rgba(255,255,255,.96);max-width:750px}
+.finale-title{font-family:'Dancing Script',cursive;font-size:3.4rem;background:linear-gradient(135deg,#ff1493,#ff69b4,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.circle-photos{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.circle-photos img{width:115px;height:115px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 8px 25px rgba(255,20,147,.4);transition:transform .3s}
+.circle-photos img:hover{transform:scale(1.1)}
+.love-bar-wrap{margin:22px 0}
+.love-bar{width:100%;height:20px;background:var(--pkl);border-radius:50px;overflow:hidden}
+.love-fill{height:100%;width:0;background:linear-gradient(90deg,#ff69b4,#ff1493,#ffd700,#ff69b4);background-size:200%;border-radius:50px;transition:width 2.5s ease .3s;animation:shimmer 2s linear infinite}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.final-msg{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--td);line-height:1.9;margin:18px 0}
+.signature{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--pkd);margin-top:18px}
+.dates-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0}
+.date-chip{background:linear-gradient(135deg,#fff0f5,#ffe4ef);padding:12px 18px;border-radius:14px;font-size:.88rem;color:var(--td)}
+.date-chip.highlight{background:linear-gradient(135deg,#ffe4ef,#ffd6e7);border:2px solid var(--pk);color:var(--pkd);font-weight:700}
+
+/* CRAZY INTRO STATS */
+.crazy-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.cs-box{background:linear-gradient(135deg,#fff0f5,#ffe4ef);border:2px solid var(--pkm);border-radius:18px;padding:16px 10px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+.cs-box:hover{transform:translateY(-4px)}
+.cs-icon{font-size:1.5rem;margin-bottom:6px}
+.cs-num{font-family:'Dancing Script',cursive;font-size:2.5rem;color:var(--pkd);font-weight:700;line-height:1}
+.cs-lbl{font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-top:4px}
+.ticker-wrap{overflow:hidden;background:linear-gradient(135deg,#ffe4ef,#ffd6e7);border-radius:14px;padding:11px 0;margin:16px 0;border:1px solid var(--pkm)}
+.ticker{display:flex;gap:35px;animation:tickerMove 14s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{font-size:.84rem;color:var(--pkd);font-weight:500;flex-shrink:0}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* CHANCE INDICATOR */
+.chance-ind{font-size:.82rem;font-weight:600;color:var(--pk);margin-top:10px;transition:color .3s}
+/* RAJAT SCREEN */
+#s-rajat{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)}
+.rajat-card{background:rgba(255,255,255,.96);max-width:720px}
+.rajat-tag{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:6px 20px;border-radius:50px;font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.rajat-title{font-family:'Dancing Script',cursive;font-size:3rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.rajat-sub{color:#555;font-size:.95rem;margin-bottom:20px;line-height:1.6}
+.rajat-photos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.rp-item{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(102,126,234,.3);position:relative}
+.rp-item img{width:100%;height:240px;object-fit:cover;display:block;transition:transform .4s}
+.rp-item:hover img{transform:scale(1.05)}
+.rp-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(40,20,80,.85));color:#fff;padding:26px 12px 12px;font-size:.8rem;font-style:italic}
+.rajat-msg{background:linear-gradient(135deg,#f0f4ff,#e8ecff);border-radius:18px;padding:20px 24px;margin:18px 0;border-left:4px solid #667eea;text-align:left}
+.rajat-msg p{color:#334;font-size:.93rem;line-height:1.75;margin-bottom:10px}
+.rajat-msg p:last-child{margin-bottom:0}
+.rajat-wish{font-family:'Playfair Display',serif;font-style:italic;font-size:.97rem;color:#5a1a3a;background:linear-gradient(135deg,#fff0f5,#ffe4ef);border-radius:15px;padding:18px 22px;margin:16px 0;border:1px dashed var(--pkm);line-height:1.9}
+.rajat-sign{font-family:'Dancing Script',cursive;font-size:1.6rem;color:#667eea;margin:16px 0}
+.rajat-name{font-size:2.2rem;display:block;margin-top:4px}
+.rajat-footer{color:#999;font-size:.8rem;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:2px}
+@media(max-width:580px){.rajat-photos{grid-template-columns:1fr}.rp-item img{height:200px}}
+/* NAV FAB */
+.nav-fab{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;font-size:1.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:300;box-shadow:0 8px 25px rgba(255,20,147,.55);transition:transform .3s,box-shadow .3s,background .3s}
+@keyframes fabPop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.nav-fab:hover{transform:scale(1.12);box-shadow:0 12px 35px rgba(255,20,147,.65)}
+.nav-fab.open{transform:rotate(45deg);background:linear-gradient(135deg,#667eea,#764ba2)}
+/* NAV OVERLAY */
+.nav-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:400;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center}
+.nav-overlay.show{display:flex}
+.nav-drawer{background:#fff;border-radius:28px 28px 0 0;padding:28px 22px 32px;width:100%;max-width:680px;animation:slideUp .4s cubic-bezier(.16,1,.3,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.nav-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.nav-header-title{font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--pkd)}
+.nav-close{background:rgba(255,20,147,.1);border:none;border-radius:50%;width:38px;height:38px;font-size:1.1rem;cursor:pointer;color:var(--pkd);display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nav-close:hover{background:rgba(255,20,147,.2)}
+.nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
+.nav-item{background:linear-gradient(135deg,#fff0f5,#ffe4ef);border:2px solid var(--pkm);border-radius:16px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .25s}
+.nav-item:hover{transform:translateY(-3px);border-color:var(--pk);box-shadow:0 8px 20px rgba(255,20,147,.2)}
+.nav-item.active-pg{border-color:var(--pkd);background:linear-gradient(135deg,#ffe4ef,#ffd6e7)}
+.nav-item-icon{font-size:1.9rem;margin-bottom:7px}
+.nav-item-name{font-size:.76rem;font-weight:600;color:var(--td);letter-spacing:.4px}
+/* SECTION PILL */
+#pill{position:fixed;top:16px;right:16px;background:rgba(255,255,255,.92);border-radius:50px;padding:7px 16px;font-size:.82rem;color:var(--pkd);font-weight:600;z-index:100;box-shadow:0 4px 14px rgba(255,20,147,.2)}
+
+/* FADE-IN */
+.fi{animation:fadeUp .6s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:580px){
+  .card{padding:28px 20px}
+  h1{font-size:2.1rem}
+  h2{font-size:1.5rem}
+  .names{font-size:2.5rem}
+  .opts{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .g-item.wide{grid-column:span 1}
+  .finale-title{font-size:2.4rem}
+  .circle-photos img{width:90px;height:90px}
+}
+</style>
+</head>
+<body>
+
+<div id="heartsBg"></div>
+<div id="pill">🔐 Unlock</div>
+<div id="cfContainer"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- FEEDBACK: CORRECT -->
+<div class="fb-overlay fb-correct" id="fbOk">
+  <div class="fb-content">
+    <span class="yay-face">🥰</span>
+    <div class="fb-msg" id="fbOkMsg">Bilkul Sahi! 💕</div>
+    <p class="fb-sub" id="fbOkSub"></p>
+  </div>
+</div>
+
+<!-- FEEDBACK: WRONG -->
+<div class="fb-overlay fb-wrong" id="fbWrong">
+  <div class="fb-content">
+    <span class="cry-face">😭</span>
+    <div class="fb-msg" id="fbWrongMsg">Arre Dholu! Galat! 😭</div>
+    <p class="fb-sub" id="fbWrongSub" style="color:#666">Ek aur mauka bacha hai... dhyan se sochoo! 🤔</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 1 — LOCK
+═══════════════════════════════════════════ -->
+<div class="screen active" id="s-lock">
+  <div class="card fi">
+    <div class="lock-icon">🔐</div>
+    <h1>Ek Raaz Ka Intezaar Hai...</h1>
+    <p>Iss khaas surprise ko unlock karne ke liye<br>apna sabse pyara nickname daalo 💌</p>
+    <div class="hint-box">💡 Hint: Pooja tumhe iss pyaare naam se bulati hai...</div>
+    <br>
+    <input type="password" id="pwdIn" placeholder="Password yahan daalo..."
+           onkeydown="if(event.key==='Enter')checkPwd()">
+    <button class="btn btn-pink" onclick="checkPwd()">Unlock Karo 💕</button>
+    <div class="err" id="pwdErr"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 2 — DEBUG CHALLENGE
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-debug">
+  <div class="card fi">
+    <div style="font-size:3rem;margin-bottom:14px">💻✨</div>
+    <h2>Pehle Ek Bug Fix Karo! 😜</h2>
+    <p>Pooja ne apni love story ka ek code likha...<br>
+    Ek number galat hai! Sahi karo aur aage bado!</p>
+    <div class="code-block">
+      <div><span class="ck">function</span> <span class="cv">anniversary</span><span class="ct">() {</span></div>
+      <div>&nbsp;&nbsp;<span class="ck">const</span> <span class="cv">years</span> <span class="ct">=</span> <span class="cbug">0</span><span class="ct">;</span> <span class="cc">// ← Bug! Kitne saal ho gaye??</span></div>
+      <div>&nbsp;&nbsp;<span class="ck">return</span> <span class="cs">"Happy "</span> <span class="ct">+ years +</span> <span class="cs">"st Anniversary! 🎊"</span><span class="ct">;</span></div>
+      <div><span class="ct">}</span></div>
+      <br>
+      <div><span class="cc">// Output: "Happy 0st Anniversary! 🎊"</span></div>
+      <div><span class="cc">// ↑ Sochoo... years = ??? Fix it!</span></div>
+    </div>
+    <p style="font-weight:600;color:var(--td);margin-bottom:8px">Sahi number daalo:</p>
+    <input type="text" id="dbgIn" placeholder="years = ???" maxlength="5"
+           onkeydown="if(event.key==='Enter')checkDbg()">
+    <button class="btn btn-pink" onclick="checkDbg()">Bug Fix Karo! 🐛→🎊</button>
+    <div id="dbgRes"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 3 — INTRO
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-intro">
+  <div class="card fi" style="max-width:700px">
+    <div class="badge">✨ 1 Beautiful Year ✨</div>
+    <h1>Happy First Anniversary!</h1>
+    <div class="names">Kunal <span style="font-size:2.5rem">💕</span> Pooja</div>
+    <p style="font-size:1.05rem">Ek saal... kitne saare pyaare lamhe, kitni saari yaadein, kitna sara pyaar! 🥰</p>
+
+    <div class="crazy-stats">
+      <div class="cs-box">
+        <div class="cs-icon">📅</div>
+        <div class="cs-num" id="dayCount">0</div>
+        <div class="cs-lbl">Din Saath</div>
+      </div>
+      <div class="cs-box" style="background:linear-gradient(135deg,#ffe4ef,#ffd6e7);border-color:var(--pk)">
+        <div class="cs-icon">💕</div>
+        <div class="cs-num">∞</div>
+        <div class="cs-lbl">Pyaar</div>
+      </div>
+      <div class="cs-box">
+        <div class="cs-icon">🥂</div>
+        <div class="cs-num" id="yrCount">0</div>
+        <div class="cs-lbl">Saal Poore</div>
+      </div>
+    </div>
+
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span class="ticker-item">🌟 21 Dec 2024 — Pehli Mulaqat</span>
+        <span class="ticker-item">🌊 Paani ke kinare ek sawaal...</span>
+        <span class="ticker-item">💍 06 Apr 2025 — Engagement</span>
+        <span class="ticker-item">💒 17 May 2025 — Shaadi</span>
+        <span class="ticker-item">🌙 Streetlights ke neeche walks</span>
+        <span class="ticker-item">🎉 17 May 2026 — 1st Anniversary!</span>
+        <span class="ticker-item">🌟 21 Dec 2024 — Pehli Mulaqat</span>
+        <span class="ticker-item">🌊 Paani ke kinare ek sawaal...</span>
+        <span class="ticker-item">💍 06 Apr 2025 — Engagement</span>
+        <span class="ticker-item">💒 17 May 2025 — Shaadi</span>
+        <span class="ticker-item">🌙 Streetlights ke neeche walks</span>
+        <span class="ticker-item">🎉 17 May 2026 — 1st Anniversary!</span>
+      </div>
+    </div>
+
+    <p style="font-style:italic;font-size:.93rem">"Ab ek fun quiz khelte hain... dekho kitna yaad hai tumhe! 😏"</p>
+    <br>
+    <button class="btn btn-pink" onclick="startQuiz()">Quiz Shuru Karo! 🎯</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 4 — QUIZ
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-quiz">
+  <div class="card fi" style="max-width:660px">
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <div class="prog-txt" id="progTxt">Sawaal 1 / 6</div>
+    <div id="qContent"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 5 — GALLERY
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-gallery">
+  <div class="card fi" style="max-width:750px">
+    <div style="font-size:3rem;margin-bottom:10px">📸</div>
+    <h2>Hamari Pyaari Tasveerein</h2>
+    <p>Har tasveer ek yaad hai... har yaad ek khazana hai 🌸</p>
+    <div class="gallery-grid">
+      <div class="g-item" onclick="openLb('Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM.jpeg')">
+        <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM.jpeg" alt="Bangalore Palace">
+        <div class="g-cap">Humare shuru ke din... Bangalore Palace 🏰</div>
+      </div>
+      <div class="g-item" onclick="openLb('Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM.jpeg')">
+        <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM.jpeg" alt="Fun times">
+        <div class="g-cap">Raat ki meethi sawaariyan... ✨</div>
+      </div>
+      <div class="g-item" onclick="openLb('Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM (1).jpeg')">
+        <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM (1).jpeg" alt="Wedding">
+        <div class="g-cap">Humari shaadi ka woh khoobsurat din 💍👰</div>
+      </div>
+      <div class="g-item" onclick="openLb('Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM (1).jpeg')">
+        <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM (1).jpeg" alt="Mountains">
+        <div class="g-cap">Baadlon ke beech sirf hum dono ☁️💕</div>
+      </div>
+      <div class="g-item wide" onclick="openLb('Pictures/WhatsApp Image 2026-05-15 at 3.53.10 PM.jpeg')">
+        <img src="Pictures/WhatsApp Image 2026-05-15 at 3.53.10 PM.jpeg" alt="Proposal by water">
+        <div class="g-cap">Paani ke kinare... woh pal jab tumne propose kiya 🌊 — zindagi bhar yaad rahega 💕</div>
+      </div>
+    </div>
+    <button class="btn btn-pink" onclick="go('s-shayari','✍️ Shayari')">Aage Bado 💌</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 6 — SHAYARI
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-shayari">
+  <div class="card fi">
+    <div style="font-size:3rem;margin-bottom:10px">✍️</div>
+    <h2>Pooja Ki Dil Ki Baat...</h2>
+    <div class="floral">🌸 💕 🌸</div>
+    <div class="shayari-text" id="shayariEl"></div>
+    <div class="floral" id="shayariFloral2" style="opacity:0">🌸 💕 🌸</div>
+    <button class="btn btn-pink" id="shayariBtn" style="display:none;margin-top:18px" onclick="showFinale()">
+      Surprise Dekho! 🎊
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 7 — FINALE
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-finale">
+  <div class="card fi" style="max-width:760px">
+    <div style="font-size:4rem;animation:pulse 1s infinite">🎊</div>
+    <div class="finale-title">Happy 1st Anniversary!</div>
+    <div style="font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--pkd);margin-bottom:18px">
+      Mere Pyaare Dholu 💕
+    </div>
+    <div class="circle-photos">
+      <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM.jpeg" alt="">
+      <img src="Pictures/WhatsApp Image 2026-05-15 at 3.53.10 PM.jpeg" alt="">
+      <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.35 PM (1).jpeg" alt="">
+      <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM (1).jpeg" alt="">
+      <img src="Pictures/WhatsApp Image 2026-05-15 at 3.52.36 PM.jpeg" alt="">
+    </div>
+    <div class="love-bar-wrap">
+      <p style="font-size:.95rem;color:var(--tm);margin-bottom:8px">💕 Humara Pyaar 💕</p>
+      <div class="love-bar"><div class="love-fill" id="loveFill"></div></div>
+      <p style="font-size:.82rem;color:var(--tm);margin-top:5px">∞% — Off the charts! 😍</p>
+    </div>
+    <div class="final-msg">
+      "Ek saal pehle hamari mulaqat ek anjaana pal tha,<br>
+      aaj woh pal hamari sabse khoobsurat kahani ban gayi hai.<br>
+      Tum mere best friend, mera sukoon, meri muskaan ho, Dholu.<br>
+      Har baar tumhe hi choose karti hoon aur karti rahungi. ❤️"
+    </div>
+    <div class="dates-row">
+      <div class="date-chip">🌟 21 Dec 2024<br><small>Pehli Mulaqat</small></div>
+      <div class="date-chip">💍 06 Apr 2025<br><small>Engagement</small></div>
+      <div class="date-chip">💒 17 May 2025<br><small>Shaadi</small></div>
+      <div class="date-chip highlight">🎉 17 May 2026<br><small>1st Anniversary</small></div>
+    </div>
+    <div class="signature">
+      With all my love,<br>
+      <span style="font-size:2.6rem">Pooja 💕</span>
+    </div>
+    <div style="margin-top:18px;font-size:1.5rem;letter-spacing:5px">❤️ 🧡 💛 💚 💙 💜 🩷</div>
+    <div style="margin-top:24px">
+      <button class="btn" onclick="go('s-rajat','👊 From Rajat')"
+        style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 8px 25px rgba(102,126,234,.4);font-size:.9rem">
+        Ek Aur Surprise Hai... 👀✨
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 8 — FROM RAJAT
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-rajat">
+  <div class="card fi rajat-card">
+    <div class="rajat-tag">Made with ❤️ by your friend</div>
+    <div class="rajat-title">Bhai Kunal... 🤝</div>
+    <p class="rajat-sub">Yeh teri Pooja ne banwaya — main toh bas ek zariya tha 😄<br>
+    Par teri love story dekh ke dil khush ho gaya!</p>
+
+    <div class="rajat-photos">
+      <div class="rp-item">
+        <img src="Pictures/IMG_2907.jpeg" alt="Agra with Kunal">
+        <div class="rp-cap">Agra Fort pe bkchodi, TajMahal to band tha na 😂</div>
+      </div>
+      <div class="rp-item">
+        <img src="Pictures/FullSizeRender.jpeg" alt="Snow Kingdom Chennai">
+        <div class="rp-cap">Snow Kingdom Chennai — that most random trip! 🥶</div>
+      </div>
+    </div>
+
+    <div class="rajat-msg">
+      <p>Bhai, teri saath ki har adventure — From IIT Jammu to Bengaluru — sab kuch ekdum epic raha hai. 🤣</p>
+      <p>Par sach bolunga, tujhe aaj Pooja ke saath itna khush dekh ke dil ke kisi kone mein ek bahut warm si feeling aati hai yaar. 🥺</p>
+      <p>Pooja — you made him the happiest guy, and for that I owe you one. Thank you for being the best thing that happened to my best buddy. 💕</p>
+    </div>
+
+    <div class="rajat-wish">
+      "Dono ko pehli anniversary ki dher saari badhaiyaan!<br>
+      Aage bhi aise hi hasate raho, saath chalte raho, aur haan —<br>
+      Kunal, kabhi kabhi dost ko bhi yaad karna! 😂"
+    </div>
+
+    <div class="rajat-sign">
+      — Tumhara dost,<br>
+      <span class="rajat-name">Rajat 🙌</span>
+    </div>
+
+    <div class="rajat-footer">
+      <span>Built with</span>
+      <span style="font-size:1.1rem;margin:0 4px">💻❤️</span>
+      <span>just for you two</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FLOATING NAV BUTTON ─── -->
+<div class="nav-fab" id="navFab" onclick="toggleNav()">🗺️</div>
+
+<!-- ─── NAV DRAWER OVERLAY ─── -->
+<div class="nav-overlay" id="navOverlay" onclick="handleOverlayClick(event)">
+  <div class="nav-drawer" id="navDrawer">
+    <div class="nav-header">
+      <div class="nav-header-title">Kahan Jaana Hai? 💕</div>
+      <button class="nav-close" onclick="toggleNav()">✕</button>
+    </div>
+    <div class="nav-grid">
+      <div class="nav-item" id="nav-s-debug" onclick="navTo('s-debug','💻 Debug')">
+        <div class="nav-item-icon">💻</div>
+        <div class="nav-item-name">Debug Challenge</div>
+      </div>
+      <div class="nav-item" id="nav-s-intro" onclick="navTo('s-intro','💕 Our Story')">
+        <div class="nav-item-icon">💕</div>
+        <div class="nav-item-name">Our Story</div>
+      </div>
+      <div class="nav-item" id="nav-s-quiz" onclick="navTo('s-quiz','🎯 Quiz')">
+        <div class="nav-item-icon">🎯</div>
+        <div class="nav-item-name">Quiz</div>
+      </div>
+      <div class="nav-item" id="nav-s-gallery" onclick="navTo('s-gallery','📸 Gallery')">
+        <div class="nav-item-icon">📸</div>
+        <div class="nav-item-name">Gallery</div>
+      </div>
+      <div class="nav-item" id="nav-s-shayari" onclick="navTo('s-shayari','✍️ Shayari')">
+        <div class="nav-item-icon">✍️</div>
+        <div class="nav-item-name">Shayari</div>
+      </div>
+      <div class="nav-item" id="nav-s-finale" onclick="navTo('s-finale','🎊 Finale')">
+        <div class="nav-item-icon">🎊</div>
+        <div class="nav-item-name">Anniversary</div>
+      </div>
+      <div class="nav-item" id="nav-s-rajat" onclick="navTo('s-rajat','👊 From Rajat')">
+        <div class="nav-item-icon">👊</div>
+        <div class="nav-item-name">From Rajat</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── QUIZ DATA ──────────────────────────────────────────────────────────
+const QS=[
+  {e:"📅",q:"Hamari pehli mulaqat kab hui thi?",
+   opts:["21 November 2024","21 December 2024","21 January 2025","21 October 2024"],ans:1,
+   okMsg:"Haan! 21 December 2024! 💫",okSub:"Kismat ne milaya tha... woh din hamesha yaad rahega! 🥰"},
+  {e:"🌊",q:"Tumne mujhe propose kahan kiya tha?",
+   opts:["Restaurant mein","Park mein","Paani ke kinare","Ghar pe"],ans:2,
+   okMsg:"Paani ke kinare! Woh pal! 💕",okSub:"Woh romantic lamha... sunset aur tumhara sawaal... dil ab bhi muskura deta hai! 🌅"},
+  {e:"💍",q:"Humari engagement kab hui thi?",
+   opts:["06 February 2025","06 March 2025","06 May 2025","06 April 2025"],ans:3,
+   okMsg:"6 April 2025! Bilkul sahi! 💍",okSub:"Woh din jab sab kuch official ho gaya... meri khushi ka koi thikana nahi tha! 🥹"},
+  {e:"🌙",q:"Raat mein hum kahan saath ghumte the?",
+   opts:["Beach pe","Mall mein","Park mein","Streetlight ke neeche"],ans:3,
+   okMsg:"Streetlights ke neeche! ✨",okSub:"Un raton ki baat hi alag thi... roshan sadkein aur tumhara saath! 🌟"},
+  {e:"💒",q:"Humari shaadi kab hui thi?",
+   opts:["07 May 2025","17 April 2025","07 June 2025","17 May 2025"],ans:3,
+   okMsg:"17 May 2025! Hamara ek saal! 🎊",okSub:"Aaj bilkul isi din ki pehli anniversary hai! Happy Anniversary Dholu! 🎉"},
+  {e:"🏷️",q:"Pooja ka mujhe sabse pyara nickname kya diya hai?",
+   opts:["Janu","Shonu","Dholu","Babu"],ans:2,
+   okMsg:"Dholu! Mera pyaara Dholu! 💕",okSub:"Yeh naam sun ke hi chehra khil jaata hai! 😊"}
+];
+
+let cQ=0,score=0,attempts=0;
+
+// ── SHAYARI ───────────────────────────────────────────────────────────
+const SHAYARI=
+`Kismat ne jab tumse milaya tha,
+Tab shayad use bhi andaaza na tha,
+Ki ek anjaani si mulaqat,
+Meri zindagi ki sabse khoobsurat kahani ban jayegi.
+
+Paani ke kinare tumhara woh pyaar bhara sawaal,
+Aaj bhi mere dil ko muskurane par majboor kar deta hai.
+Aur raat ke sannate mein streetlight ke neeche,
+Tumhare saath chalte hue har pal ek sapna sa lagta hai.
+
+Dholu, tum sirf mere pati nahi,
+Mere dost, meri muskaan, meri taqat aur mera sukoon ho.
+Har din tumhare saath guzarna,
+Meri zindagi ka sabse pyara ehsaas hai.
+
+Agar zindagi ek code hoti,
+Toh uska sabse khoobsurat output tum hote.
+Aur agar mujhe har janam mein ek hi choice milti,
+Toh main har baar tumhe hi choose karti.
+
+Happy First Anniversary, My Love.
+I love you more than words, more than time,
+and more than infinity itself. ❤️`;
+
+// ── FLOATING HEARTS ──────────────────────────────────────────────────
+(function spawnHearts(){
+  const c=document.getElementById('heartsBg');
+  const ems=['💕','❤️','🩷','💗','💖','💝','🌸','✨','💫'];
+  for(let i=0;i<18;i++){
+    const h=document.createElement('span');
+    h.className='fheart';
+    h.textContent=ems[i%ems.length];
+    h.style.cssText=`left:${Math.random()*100}vw;font-size:${Math.random()*18+9}px;`+
+      `animation-duration:${Math.random()*9+7}s;animation-delay:${Math.random()*12}s`;
+    c.appendChild(h);
+  }
+})();
+
+// ── NAVIGATION ────────────────────────────────────────────────────────
+function go(id,label){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('pill').textContent=label;
+  window.scrollTo(0,0);
+}
+
+// ── PASSWORD ─────────────────────────────────────────────────────────
+function checkPwd(){
+  const v=document.getElementById('pwdIn').value.toLowerCase().trim();
+  const e=document.getElementById('pwdErr');
+  if(v==='dholu'){
+    e.textContent='';
+    document.querySelector('.lock-icon').textContent='🔓';
+    confetti(80);
+    setTimeout(()=>go('s-debug','💻 Debug'),900);
+  } else if(!v){
+    e.textContent='⚠️ Kuch toh daalo!';
+  } else {
+    e.textContent='❌ Galat! Pooja tumhe ek pyara nickname deti hai... yaad karo! 🤔';
+    const inp=document.getElementById('pwdIn');
+    inp.classList.remove('shake');
+    void inp.offsetWidth;
+    inp.classList.add('shake');
+  }
+}
+
+// ── DEBUG CHALLENGE ────────────────────────────────────────────────────
+function checkDbg(){
+  const v=document.getElementById('dbgIn').value.trim();
+  const r=document.getElementById('dbgRes');
+  if(v==='1'){
+    r.innerHTML=`<div class="dbr db-ok">✅ Bug Fixed!<br>
+      <span style="font-family:'Courier New';font-size:.88rem">Output: "Happy 1st Anniversary! 🎊"</span><br>
+      <small>Wah! Perfect! Ek saal ka jashan shuru hota hai! 🥳</small></div>`;
+    confetti(60);
+    setTimeout(()=>go('s-intro','💕 Our Story'),1600);
+  } else if(!v){
+    r.innerHTML=`<div class="dbr db-err">⚠️ Number toh daalo pehle!</div>`;
+  } else {
+    r.innerHTML=`<div class="dbr db-err">❌ "${v}" → Sochoo... kitne saal ho gaye hain? 🤔</div>`;
+  }
+}
+
+// ── QUIZ ──────────────────────────────────────────────────────────────
+function startQuiz(){go('s-quiz','🎯 Quiz');cQ=0;score=0;attempts=0;renderQ();}
+
+function renderQ(){
+  attempts=0;
+  const q=QS[cQ];
+  document.getElementById('progFill').style.width=(cQ/QS.length*100)+'%';
+  document.getElementById('progTxt').textContent=`Sawaal ${cQ+1} / ${QS.length}`;
+  document.getElementById('qContent').innerHTML=
+    `<div class="q-emoji">${q.e}</div>
+     <div class="q-text">${q.q}</div>
+     <div class="opts" id="opts">
+       ${q.opts.map((o,i)=>`<button class="opt" id="o${i}" onclick="pick(${i})">${o}</button>`).join('')}
+     </div>
+     <div class="chance-ind" id="chanceInd">💖 2 Chances Hain!</div>`;
+}
+
+function pick(idx){
+  const q=QS[cQ];
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=null);
+  if(idx===q.ans){
+    document.getElementById('o'+idx).classList.add('correct');
+    score++;
+    document.getElementById('fbOkMsg').textContent=q.okMsg;
+    document.getElementById('fbOkSub').textContent=q.okSub;
+    confetti(70);
+    heartBurst();
+    showFb('fbOk',2600,true);
+  } else {
+    attempts++;
+    document.getElementById('o'+idx).classList.add('wrong');
+    if(attempts>=2){
+      document.getElementById('o'+q.ans).classList.add('correct');
+      document.getElementById('fbWrongMsg').textContent='Arre yaar! Dono chances khatam! 😭😭';
+      document.getElementById('fbWrongSub').textContent=`Sahi jawab tha: "${q.opts[q.ans]}" — Yaad rakhna! 📝`;
+      showFb('fbWrong',3000,true);
+    } else {
+      document.getElementById('fbWrongMsg').textContent='Arre Dholu! Yeh galat hai! 😭';
+      document.getElementById('fbWrongSub').textContent='Sirf 1 aur mauka... dhyan se sochoo! 🤔';
+      showFb('fbWrong',2200,false);
+    }
+  }
+}
+
+function showFb(id,ms,moveNext){
+  const el=document.getElementById(id);
+  el.classList.add('show');
+  setTimeout(()=>{
+    el.classList.remove('show');
+    if(moveNext){
+      nextQ();
+    } else {
+      // re-enable only non-wrong options
+      const q=QS[cQ];
+      document.querySelectorAll('.opt').forEach((b,i)=>{
+        if(!b.classList.contains('wrong')) b.onclick=()=>pick(i);
+      });
+      const ci=document.getElementById('chanceInd');
+      if(ci){ci.textContent='⚠️ Aakhri Mauka! Ek hi chance bacha! 😰';ci.style.color='#e53935';}
+    }
+  },ms);
+}
+
+function nextQ(){
+  cQ++;
+  if(cQ>=QS.length){quizDone();}else{renderQ();}
+}
+
+function quizDone(){
+  document.getElementById('progFill').style.width='100%';
+  document.getElementById('progTxt').textContent='Quiz Complete! 🎉';
+  const pct=Math.round(score/QS.length*100);
+  const [em,msg]=score===QS.length
+    ?['🏆✨','Perfect Score! Tumhe sab kuch yaad hai! Kitna pyaar hai! 🥰']
+    :score>=4
+    ?['🥳💖','Bahut achha! Almost perfect! Pooja tumpar naaz karti hai! 💕']
+    :['💝🤗','Koi baat nahi! Main tumse pyaar karti hoon chaahe kuch bhi ho! 💝'];
+  document.getElementById('qContent').innerHTML=
+    `<div style="font-size:3rem;margin-bottom:14px">${em}</div>
+     <div class="quiz-done">Quiz Khatam!</div>
+     <div class="score-badge">${score} / ${QS.length} Sahi Jawab 🎯</div>
+     <p style="margin:18px 0;font-size:1.02rem">${msg}</p>
+     <button class="btn btn-pink" onclick="go('s-gallery','📸 Gallery')">
+       Hamari Tasveerein Dekho 📸
+     </button>`;
+  if(score===QS.length)confetti(120);
+}
+
+// ── GALLERY ───────────────────────────────────────────────────────────
+function openLb(src){
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLb(){document.getElementById('lightbox').classList.remove('show');}
+
+// ── SHAYARI TYPEWRITER ────────────────────────────────────────────────
+let shayariDone=false;
+function typeShayari(){
+  if(shayariDone)return;
+  shayariDone=true;
+  const el=document.getElementById('shayariEl');
+  el.textContent='';
+  let i=0;
+  (function type(){
+    if(i<SHAYARI.length){
+      el.textContent+=SHAYARI[i++];
+      setTimeout(type,SHAYARI[i-1]==='\n'?60:22);
+    } else {
+      document.getElementById('shayariFloral2').style.opacity='1';
+      document.getElementById('shayariBtn').style.display='inline-block';
+    }
+  })();
+}
+
+// ── FINALE ────────────────────────────────────────────────────────────
+function showFinale(){
+  go('s-finale','🎊 Surprise!');
+  [300,900,1500].forEach(d=>setTimeout(()=>confetti(80),d));
+  heartBurst();
+  setTimeout(()=>{
+    const lf=document.getElementById('loveFill');
+    lf.style.width='100%';
+  },400);
+}
+
+// ── CONFETTI ──────────────────────────────────────────────────────────
+function confetti(n){
+  const C=['#ff69b4','#ff1493','#ffd700','#ff6b6b','#4ecdc4','#a8edea','#ff9a9e','#c084fc'];
+  const cont=document.getElementById('cfContainer');
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');
+    p.className='cp';
+    p.style.cssText=`left:${Math.random()*100}vw;background:${C[i%C.length]};`+
+      `width:${Math.random()*10+4}px;height:${Math.random()*10+4}px;`+
+      `border-radius:${Math.random()>.5?'50%':'2px'};`+
+      `--tx:${Math.random()*200-100}px;`+
+      `animation-duration:${Math.random()*2+2}s;`+
+      `animation-delay:${Math.random()*.6}s`;
+    cont.appendChild(p);
+    setTimeout(()=>p.remove(),4200);
+  }
+}
+
+function heartBurst(){
+  const cont=document.getElementById('cfContainer');
+  ['💕','❤️','🩷','💗','💖'].forEach((em,_i)=>{
+    for(let j=0;j<6;j++){
+      const h=document.createElement('div');
+      h.style.cssText=`position:fixed;pointer-events:none;z-index:600;`+
+        `left:${15+Math.random()*70}vw;top:${25+Math.random()*50}vh;`+
+        `font-size:${Math.random()*18+14}px;animation:floatUp 2.2s ease forwards;`+
+        `animation-delay:${Math.random()*.5}s`;
+      h.textContent=em;
+      cont.appendChild(h);
+      setTimeout(()=>h.remove(),3000);
+    }
+  });
+}
+
+// ── COUNTER ANIMATION ─────────────────────────────────────────────────
+function countUp(id,target,ms){
+  const el=document.getElementById(id);if(!el)return;
+  const step=target/(ms/16);let cur=0;
+  const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=Math.floor(cur);if(cur>=target)clearInterval(t);},16);
+}
+
+// ── SCREEN OBSERVERS ─────────────────────────────────────────────────
+new MutationObserver(muts=>{
+  muts.forEach(m=>{
+    if(m.target.id==='s-intro'&&m.target.classList.contains('active')){
+      setTimeout(()=>{countUp('dayCount',512,1800);countUp('yrCount',1,900);},200);
+      setTimeout(()=>confetti(50),100);
+    }
+    if(m.target.id==='s-shayari'&&m.target.classList.contains('active')){
+      setTimeout(typeShayari,600);
+    }
+  });
+}).observe(document.getElementById('s-intro'),{attributes:true,attributeFilter:['class']});
+
+new MutationObserver(muts=>{
+  muts.forEach(m=>{
+    if(m.target.id==='s-shayari'&&m.target.classList.contains('active')){
+      setTimeout(typeShayari,600);
+    }
+  });
+}).observe(document.getElementById('s-shayari'),{attributes:true,attributeFilter:['class']});
+
+new MutationObserver(muts=>{
+  muts.forEach(m=>{
+    if(m.target.id==='s-rajat'&&m.target.classList.contains('active')){
+      setTimeout(()=>confetti(60),300);
+      setActiveNav('s-rajat');
+    }
+  });
+}).observe(document.getElementById('s-rajat'),{attributes:true,attributeFilter:['class']});
+
+// ── NAV FAB ───────────────────────────────────────────────────────────
+function toggleNav(){
+  const overlay=document.getElementById('navOverlay');
+  const fab=document.getElementById('navFab');
+  overlay.classList.toggle('show');
+  fab.classList.toggle('open');
+}
+
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('navOverlay')) toggleNav();
+}
+
+function navTo(screen,label){
+  document.getElementById('navOverlay').classList.remove('show');
+  document.getElementById('navFab').classList.remove('open');
+  if(screen==='s-quiz'){startQuiz();}
+  else if(screen==='s-shayari'){shayariDone=false;go(screen,label);}
+  else{go(screen,label);}
+  setActiveNav(screen);
+}
+
+function setActiveNav(screen){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active-pg'));
+  const t=document.getElementById('nav-'+screen);
+  if(t) t.classList.add('active-pg');
+}
+</script>
+</body>
+</html>
